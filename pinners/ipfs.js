@@ -1,4 +1,4 @@
-const { create, globSource } = require("ipfs-http-client");
+const { createHelia, globSource, ipns } = require("./helia");
 const PeerId = require("peer-id");
 const last = require("it-last");
 const fsPath = require("path");
@@ -8,7 +8,7 @@ module.exports = {
   builder: async (options) => {
     const { host, port, protocol, timeout, headers } = options;
 
-    return create({ host, port, protocol, timeout, headers });
+    return createHelia({ host, port, protocol, timeout, headers });
   },
   upload: async (api, options) => {
     const { path, pattern, pin, timeout, key, verbose } = options;
@@ -23,11 +23,11 @@ module.exports = {
 
     let _key;
     if (key) {
-      const keys = await api.key.list();
+      const keys = await helia.libp2p.keychain.listKeys();
 
       _key = keys.find((k) => k.name === key);
       if (!_key) {
-        _key = await api.key.gen(key, {
+        _key = await helia.libp2p.keychain.createKey(key, {
           type: "rsa",
           size: 2048,
         });
@@ -35,7 +35,13 @@ module.exports = {
         if (verbose) console.log(`Created IPNS key ${JSON.stringify(_key)}`);
       }
 
-      await api.name.publish(cid, { key });
+      const peerId = await helia.libp2p.keychain.exportPeerId(_key.name)
+
+      const name = ipns(helia, [
+        // configure routings here
+      ])
+
+      await name.publish(peerId, cid)
     }
 
     return {
