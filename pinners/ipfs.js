@@ -1,4 +1,4 @@
-const { createHelia, globSource, ipns } = require("./helia");
+const { createHelia, globSource, ipns } = require("helia");
 const PeerId = require("peer-id");
 const last = require("it-last");
 const fsPath = require("path");
