@@ -43,6 +43,7 @@
     "helia": "^4.2.5",
     "ipfs-http-client": "55.0.0",
     "it-last": "1.0.5",
+    "kubo-rpc-client": "^4.1.1",
     "peer-id": "0.16.0"
   },
   "devDependencies": {

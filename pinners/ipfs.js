@@ -1,4 +1,4 @@
-const { createHelia, globSource, ipns } = import("../helia-cjs");
+const { create, globSource } = require("../kubo-rpc-client.cjs.js");
 const PeerId = require("peer-id");
 const last = require("it-last");
 const fsPath = require("path");
@@ -8,7 +8,7 @@ module.exports = {
   builder: async (options) => {
     const { host, port, protocol, timeout, headers } = options;
 
-    return createHelia({ host, port, protocol, timeout, headers });
+    return create({ host, port, protocol, timeout, headers });
   },
   upload: async (api, options) => {
     const { path, pattern, pin, timeout, key, verbose } = options;
@@ -23,11 +23,11 @@ module.exports = {
 
     let _key;
     if (key) {
-      const keys = await helia.libp2p.keychain.listKeys();
+      const keys = await api.key.list();
 
       _key = keys.find((k) => k.name === key);
       if (!_key) {
-        _key = await helia.libp2p.keychain.createKey(key, {
+        _key = await api.key.gen(key, {
           type: "rsa",
           size: 2048,
         });
@@ -35,13 +35,7 @@ module.exports = {
         if (verbose) console.log(`Created IPNS key ${JSON.stringify(_key)}`);
       }
 
-      const peerId = await helia.libp2p.keychain.exportPeerId(_key.name)
-
-      const name = ipns(helia, [
-        // configure routings here
-      ])
-
-      await name.publish(peerId, cid)
+      await api.name.publish(cid, { key });
     }
 
     return {
