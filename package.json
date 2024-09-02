@@ -3,6 +3,7 @@
   "version": "0.3.2-0",
   "description": "IPFS upload action",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "ncc build index.js --license LICENSE",
     "lint": "eslint --max-warnings 0 runner.js uploader.js pinners/*.js",
