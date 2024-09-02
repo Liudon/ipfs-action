@@ -1,4 +1,4 @@
-const { create, globSource } = require("../kubo-rpc-client.cjs.js");
+const { create, globSource } = require("../kubo-rpc-client-cjs");
 const PeerId = require("peer-id");
 const last = require("it-last");
 const fsPath = require("path");
