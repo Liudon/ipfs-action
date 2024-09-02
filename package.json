@@ -46,6 +46,7 @@
     "peer-id": "0.16.0"
   },
   "devDependencies": {
+    "esbuild": "^0.23.1",
     "eslint": "8.6.0",
     "husky": "^8.0.1",
     "jest": "27.0.4",

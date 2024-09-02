@@ -1,4 +1,4 @@
-const { createHelia, globSource, ipns } = import("helia");
+const { createHelia, globSource, ipns } = import("../helia-cjs");
 const PeerId = require("peer-id");
 const last = require("it-last");
 const fsPath = require("path");
