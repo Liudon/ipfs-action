@@ -1,4 +1,4 @@
-const { create, globSource } = require("../kubo-rpc-client-cjs");
+const { createHelia, globSource } = require("../helia-cjs");
 const PeerId = require("peer-id");
 const last = require("it-last");
 const fsPath = require("path");
@@ -8,7 +8,7 @@ module.exports = {
   builder: async (options) => {
     const { host, port, protocol, timeout, headers } = options;
 
-    return create({ host, port, protocol, timeout, headers });
+    return createHelia({ host, port, protocol, timeout, headers });
   },
   upload: async (api, options) => {
     const { path, pattern, pin, timeout, key, verbose } = options;
